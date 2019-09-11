@@ -1,2 +1,1 @@
-# rancher-catalog
-OS Catalog
+Odiseasoft Template for Nginx, PHP7 & MariaDB
