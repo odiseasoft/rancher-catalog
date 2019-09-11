@@ -1,0 +1,13 @@
+.catalog:
+  name: Aytra
+  version: 7.5
+  description: |
+    Aytra Cloud enables our customers to fully realize the potential of cloud computing by allowing them to automatically migrate application workloads across public and private clouds to achieve an ideal balance of security, cost, and performance.
+  uuid: aytra-0
+  questions:
+    - variable: "exo-scale"
+      description: "Number of exosphere nodes."
+      label: "Number of Exosphere Nodes:"
+      required: true
+      default: 1
+      type: "int"

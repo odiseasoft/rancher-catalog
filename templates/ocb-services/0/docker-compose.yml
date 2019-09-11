@@ -1,0 +1,52 @@
+  database:
+    image: registry.gitlab.com/averri/codex-db
+    environment:
+     - MYSQL_ROOT_PASSWORD=zagbabyt
+    ports:
+     - 3306:3306
+
+  reports:
+    image: registry.gitlab.com/averri/giacoop-reports
+
+  giacoop:
+    image: registry.gitlab.com/averri/giacoop
+    environment:
+     - "JAVA_OPTS=-XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=30 -XX:+UseG1GC -XX:+UseCompressedOops 
+         -Djava.security.egd=file:/dev/./urandom 
+         -Djava.rmi.server.hostname=${HOSTNAME}
+         -Dcom.sun.management.jmxremote.port=7070 
+         -Dcom.sun.management.jmxremote.rmi.port=7070 
+         -Dcom.sun.management.jmxremote 
+         -Dcom.sun.management.jmxremote.authenticate=false 
+         -Dcom.sun.management.jmxremote.ssl=false"
+    ports:
+     - 8080:8080
+     - 7070:7070
+    volumes_from:
+     - reports
+
+  emanager:
+    image: registry.gitlab.com/averri/ocb-manager
+    environment:
+         - "JAVA_OPTS=-XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=30 -XX:+UseG1GC -XX:+UseCompressedOops
+             -Djava.security.egd=file:/dev/./urandom
+             -Djava.rmi.server.hostname=${HOSTNAME}
+             -Dcom.sun.management.jmxremote.port=7070
+             -Dcom.sun.management.jmxremote.rmi.port=7070
+             -Dcom.sun.management.jmxremote
+             -Dcom.sun.management.jmxremote.authenticate=false
+             -Dcom.sun.management.jmxremote.ssl=false"
+    ports:
+     - 8081:8080
+     - 7071:7070
+    volumes:
+     - /var/www/html/wp-content/themes/ocbrj/emanager:/emanager
+
+  ocbweb:
+    image: registry.gitlab.com/mfalzetta/ocbweb
+    ports:
+     - 80:80
+    volumes:
+     - /var/www/html/wp-content/themes/ocbrj/emanager:/var/www/html/wp-content/themes/ocbrj/emanager
+    extra_hosts:
+     - "localhost.localdomain:127.0.0.1"
