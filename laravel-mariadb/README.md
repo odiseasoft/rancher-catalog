@@ -1,1 +1,0 @@
-Odiseasoft Template for Nginx, PHP7 & MariaDB
