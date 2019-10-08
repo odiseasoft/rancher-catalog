@@ -5,7 +5,6 @@ metadata:
   name: {{ template "lamp.fullname" . }}-app
   annotations:
     kubernetes.io/tls-acme: "true"
-{{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
   tls:
   - secretName: {{ template "lamp.fullname" . }}-tls-app
