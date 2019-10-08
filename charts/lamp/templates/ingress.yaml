@@ -5,15 +5,6 @@ metadata:
   name: {{ template "lamp.fullname" . }}-app
   annotations:
     kubernetes.io/tls-acme: "true"
-    {{- if .Values.ingress.htpasswdString }}
-    ingress.kubernetes.io/auth-type: basic
-    ingress.kubernetes.io/auth-secret: {{ template "lamp.fullname" . }}
-    ingress.kubernetes.io/auth-realm: "Authenticate"
-    {{- end }}
-    {{- if .Values.ingress.subdomainWWW }}
-    ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^(.*)$ $scheme://www.{{ template "lamp.domain" . }}$1;
-    {{- end }}
 {{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
   tls:
