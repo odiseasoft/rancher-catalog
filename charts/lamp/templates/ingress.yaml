@@ -4,9 +4,7 @@ kind: Ingress
 metadata:
   name: {{ template "lamp.fullname" . }}-app
   annotations:
-    {{- if .Values.ingress.ssl }}
     kubernetes.io/tls-acme: "true"
-    {{- end }}
     {{- if .Values.ingress.htpasswdString }}
     ingress.kubernetes.io/auth-type: basic
     ingress.kubernetes.io/auth-secret: {{ template "lamp.fullname" . }}
@@ -18,12 +16,10 @@ metadata:
     {{- end }}
 {{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
-  {{- if .Values.ingress.ssl }}
   tls:
   - secretName: {{ template "lamp.fullname" . }}-tls-app
     hosts:
     - {{ template "lamp.domain" . }}
-  {{- end }}
   rules:
   - host: {{ template "lamp.domain" . }}
     http:
