@@ -5,6 +5,7 @@ metadata:
   name: {{ template "lamp.fullname" . }}-app
   annotations:
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 0
 spec:
   tls:
   - secretName: {{ template "lamp.fullname" . }}-tls-app
