@@ -471,7 +471,7 @@ spec:
       - name: "mysql"
         image: "{{ .Values.mysql.repository }}:{{ .Values.mysql.tag }}"
         imagePullPolicy: {{ .Values.mysql.pullPolicy }}
-        env:
+        environment:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
