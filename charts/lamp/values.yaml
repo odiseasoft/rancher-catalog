@@ -44,8 +44,8 @@ php:
   # oldHTTPRoot: /var/www/html
 
   ## php.ini additional PHP config values, see examples on how to use
-  # ini: |
-  #   short_open_tag=On
+  ini: |
+    short_open_tag=On
 
   ## php-fpm.conf: additional PHP FPM config values
   # fpm: |
@@ -314,7 +314,8 @@ ingress:
   # htpasswdString: "user:$apr1$FfVI2PRr$f9MW8rsr5RmmxbdV0Iipk1"
 
   ## ingress.annotations specify custom ingress annotations such as e.g.
-  # annotations:
+  annotations:
+    ingress.kubernetes.io/proxy-body-size: 0
   #   ingress.kubernetes.io/proxy-body-size: "50m"
   #   kubernetes.io/ingress.class: nginx
 
