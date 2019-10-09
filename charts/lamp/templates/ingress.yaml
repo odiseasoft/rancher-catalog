@@ -4,13 +4,28 @@ kind: Ingress
 metadata:
   name: {{ template "lamp.fullname" . }}-app
   annotations:
+    {{- if .Values.ingress.ssl }}
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 0
+    {{- end }}
+    {{- if .Values.ingress.htpasswdString }}
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-secret: {{ template "lamp.fullname" . }}
+    ingress.kubernetes.io/auth-realm: "Authenticate"
+    {{- end }}
+    {{- if .Values.ingress.subdomainWWW }}
+    ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^(.*)$ $scheme://www.{{ template "lamp.domain" . }}$1;
+    {{- end }}
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
 spec:
+  {{- if .Values.ingress.ssl }}
   tls:
   - secretName: {{ template "lamp.fullname" . }}-tls-app
     hosts:
     - {{ template "lamp.domain" . }}
+  {{- end }}
   rules:
   - host: {{ template "lamp.domain" . }}
     http:
