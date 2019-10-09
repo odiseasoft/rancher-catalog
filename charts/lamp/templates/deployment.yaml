@@ -473,15 +473,27 @@ spec:
         imagePullPolicy: {{ .Values.mysql.pullPolicy }}
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: {{ .Values.mysql.rootPassword }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "lamp.fullname" . }}
+              key: mysql-root-password
         {{- if and .Values.mysql.user .Values.mysql.password }}
         - name: MYSQL_USER
-          value: {{ .Values.mysql.user }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "lamp.fullname" . }}
+              key: mysql-user
         - name: MYSQL_PASSWORD
-          value: {{ .Values.mysql.password }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "lamp.fullname" . }}
+              key: mysql-password
         {{- if .Values.mysql.database }}
         - name: MYSQL_DATABASE
-          value: {{ .Values.mysql.database }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "lamp.fullname" . }}
+              key: mysql-database
         {{- end }}
         {{- end }}
         volumeMounts:
