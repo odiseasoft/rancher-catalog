@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: php
+        tier: backend
+    spec:
+      volumes:
+      - name: dir
+        persistentVolumeClaim:
+          claimName: dir
+      containers:
+      - name: php
+        image: php:7-fpm
+        volumeMounts:
+        - name: dir
+          mountPath: /dir
+      initContainers:
+      - name: install
+        image: busybox
+        volumeMounts:
+        - name: dir
+          mountPath: /dir
+        command:
+        - wget
+        - "-O"
+        - "/dir/index.php"
+        - https://raw.githubusercontent.com/videofalls/demo/master/index.php
