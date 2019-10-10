@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: php
+  name: {{ template "lamp.fullname" . }}
   labels:
     tier: backend
 spec:
@@ -19,7 +19,7 @@ spec:
       volumes:
       - name: dir
         persistentVolumeClaim:
-          claimName: dir
+          claimName: {{ template "lamp.fullname" . }}
       containers:
       - name: php
         image: php:7-fpm
