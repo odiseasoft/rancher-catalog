@@ -1,0 +1,8 @@
+apiVersion: v1
+description: Modular and transparent Nginx, PHP-FPM, LoadBalancer, Ingress, SSL
+name: Nginx-Php7
+version: 1.0
+appVersion: 7
+home: https://github.com/lead4good/helm-lamp-stack
+maintainers:
+  - name: lead4good
